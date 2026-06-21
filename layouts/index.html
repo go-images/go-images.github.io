@@ -1,0 +1,53 @@
+{{ define "main" }}
+<section class="hero">
+  <img class="hero-logo" src="{{ "img/logo.svg" | relURL }}" alt="go-images logo" width="96" height="96">
+  <h1>
+    <span class="accent">{{ .Site.Params.heroAccent }}</span>
+  </h1>
+  {{ with .Site.Params.heroTagline }}<p class="tag">{{ . }}</p>{{ end }}
+  <div class="intro">
+    {{ range .Site.Params.heroIntro }}<p>{{ . | safeHTML }}</p>{{ end }}
+  </div>
+</section>
+
+<section id="why">
+  <h2>Why go-images</h2>
+  <p>
+    Image processing in most languages means binding a C library &mdash; OpenCV, libvips,
+    ImageMagick. go-images brings the <code>scikit-image</code> vocabulary &mdash; filters,
+    edge detectors, morphology, geometry and colour transforms &mdash; to Go with
+    <strong>no cgo</strong>, cross-compiling to a static binary everywhere. The separable
+    hot operations are go-asmgen SIMD-accelerated, so it <strong>beats scikit-image</strong>
+    on box blur and Sobel. It is the cgo-free image processor the Go and Ruby ecosystems lacked.
+  </p>
+</section>
+
+<section id="repos">
+  <h2>Repositories</h2>
+  <div class="grid">
+    <div class="card">
+      <h4><a href="https://github.com/go-images/images">images</a></h4>
+      <p>The library. Filters (<code>GaussianBlur</code>/<code>BoxBlur</code>/<code>Median</code>/<code>Sharpen</code>), edges (<code>Sobel</code>/<code>Prewitt</code>/<code>Scharr</code>/<code>Laplacian</code>/<code>Canny</code>), morphology (<code>Erode</code>/<code>Dilate</code>), geometry (<code>Resize</code>/<code>Rotate</code>/<code>Crop</code>/<code>Flip</code>), colour (<code>Grayscale</code>/<code>RGBToHSV</code>/<code>Otsu</code>), and PNG/JPEG load/save + in-memory decode/encode. SIMD kernels on amd64 (SSE2), arm64 (NEON) and s390x (vector).</p>
+    </div>
+    <div class="card">
+      <h4><a href="https://go-images.github.io/docs/">docs</a></h4>
+      <p>Versioned documentation site (MkDocs Material): API reference, the roadmap, and honest benchmark pages versus scikit-image. <a href="https://github.com/go-images/docs">Source →</a></p>
+    </div>
+    <div class="card">
+      <h4><a href="https://github.com/go-images/brand">brand</a></h4>
+      <p>Logos and icons for the organization, in SVG / PNG / JPG / ICO / ICNS across colour, white and black variants.</p>
+    </div>
+  </div>
+</section>
+
+<section id="quality">
+  <h2>Quality bar</h2>
+  <ul class="features">
+    <li><strong>Pure Go.</strong> <code>CGO_ENABLED=0</code> across the org. No OpenCV, no libvips, no native shims.</li>
+    <li><strong>100% test coverage.</strong> Gated in CI, validated against <code>scikit-image</code>.</li>
+    <li><strong>Faster than scikit-image</strong> on the separable hot operations (box blur, Sobel) via go-asmgen SIMD; honest where it is not.</li>
+    <li><strong>Multi-arch.</strong> Portable scalar core on all six 64-bit targets; SIMD kernels on amd64 / arm64 / s390x.</li>
+    <li><strong>BSD-3-Clause</strong> on every source file.</li>
+  </ul>
+</section>
+{{ end }}

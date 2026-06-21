@@ -1,0 +1,40 @@
+baseURL = 'https://go-images.github.io/'
+locale  = 'en-us'
+title   = 'go-images'
+# No theme — layouts live in ./layouts
+
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+
+[params]
+  description = "go-images is a pure-Go (CGO=0) scikit-image-style image-processing library — filters, edges, morphology, geometry and colour — with SIMD kernels, faster than scikit-image on the separable hot operations."
+  brand       = "go-images"
+  github      = "go-images"
+  heroAccent  = "go-images"
+  heroTagline = "scikit-image-style image processing in pure Go. No OpenCV, no libvips."
+
+  heroIntro = [
+    "<strong>go-images</strong> brings the <code>scikit-image</code> vocabulary to Go &mdash; blur, edges, morphology, geometry and colour transforms over an RGBA raster &mdash; in <strong>pure Go, with cgo disabled</strong>. Load and save PNG/JPEG, or decode/encode in memory, then run <code>gaussian_blur</code>, <code>sobel</code>, <code>canny</code>, <code>erode</code>/<code>dilate</code>, <code>resize</code>, <code>otsu</code> and more.",
+    "Image processing in most languages means binding OpenCV or libvips (both C). go-images is a single portable module that cross-compiles to a static binary, accelerated by go-asmgen SIMD. It <strong>beats scikit-image</strong> on the separable hot operations (box blur, Sobel). 100% test coverage is the bar, validated against scikit-image."
+  ]
+
+[menu]
+  [[menu.main]]
+    identifier = "why"
+    name       = "Why"
+    url        = "#why"
+    weight     = 10
+  [[menu.main]]
+    identifier = "repos"
+    name       = "Repos"
+    url        = "#repos"
+    weight     = 20
+  [[menu.main]]
+    identifier = "quality"
+    name       = "Quality"
+    url        = "#quality"
+    weight     = 30
+  [[menu.main]]
+    identifier = "docs"
+    name       = "Docs"
+    url        = "https://go-images.github.io/docs/"
+    weight     = 40
