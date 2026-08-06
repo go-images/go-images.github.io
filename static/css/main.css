@@ -59,6 +59,87 @@
     --hero-gradient-2:  rgba(234, 88, 12, 0.30);
   }
 }
+/* Explicit overrides for the manual toggle (button in nav), independent of
+   the OS-level prefers-color-scheme media query above. No [data-theme]
+   attribute = "system", which the media query already handles. */
+:root[data-theme="dark"] {
+    --fg:        #ffedd5;
+    --bg:        #1a0a02;
+    --bg-2:      #2a1407;
+    --muted:     #fdba74;
+    --accent:    #fb923c;
+    --accent-2:  #fdba74;
+    --accent-3:  #fed7aa;
+    --code-bg:   #3b1d08;
+    --border:    #4a2510;
+    --thread:    #fb923c;
+    --mesh-edge:        rgba(253, 186, 116, 0.32);
+    --mesh-edge-hi:     rgba(253, 230, 138, 0.85);
+    --mesh-arch-fill:   #fdba74;
+    --mesh-arch-halo:   rgba(253, 186, 116, 0.30);
+    --mesh-distro-fill: #fb923c;
+    --mesh-distro-halo: rgba(251, 191, 36, 0.22);
+    --mesh-hub-fill:    #fed7aa;
+    --mesh-hub-halo:    rgba(253, 230, 138, 0.36);
+    --mesh-label-fg:    #fed7aa;
+    --mesh-container-dc-fill:     rgba(253, 186, 116, 0.08);
+    --mesh-container-dc-stroke:   rgba(253, 186, 116, 0.65);
+    --mesh-container-rack-fill:   rgba(253, 186, 116, 0.15);
+    --mesh-container-rack-stroke: rgba(253, 186, 116, 0.55);
+    --mesh-container-label-fg:    rgba(254, 243, 199, 0.95);
+    --hero-gradient-1:  rgba(253, 186, 116, 0.22);
+    --hero-gradient-2:  rgba(234, 88, 12, 0.30);
+  
+}
+:root[data-theme="light"] {
+  --fg:        #2a1407;
+  --bg:        #fff7ed;
+  --bg-2:      #ffedd5;
+  --muted:     #9a3412;
+  --accent:    #ea580c;
+  --accent-2:  #f97316;
+  --accent-3:  #fdba74;
+  --code-bg:   #ffedd5;
+  --border:    #fed7aa;
+  --thread:    #ea580c;
+  --mesh-edge:        rgba(234, 88, 12, 0.32);
+  --mesh-edge-hi:     rgba(234, 88, 12, 0.85);
+  --mesh-arch-fill:   #ea580c;
+  --mesh-arch-halo:   rgba(234, 88, 12, 0.30);
+  --mesh-distro-fill: #f97316;
+  --mesh-distro-halo: rgba(245, 158, 11, 0.22);
+  --mesh-hub-fill:    #b45309;
+  --mesh-hub-halo:    rgba(180, 83, 9, 0.36);
+  --mesh-label-fg:    #78350f;
+  --mesh-container-dc-fill:     rgba(234, 88, 12, 0.06);
+  --mesh-container-dc-stroke:   rgba(234, 88, 12, 0.55);
+  --mesh-container-rack-fill:   rgba(234, 88, 12, 0.14);
+  --mesh-container-rack-stroke: rgba(234, 88, 12, 0.45);
+  --mesh-container-label-fg:    rgba(120, 53, 15, 0.85);
+  --hero-gradient-1:  rgba(253, 186, 116, 0.30);
+  --hero-gradient-2:  rgba(234, 88, 12, 0.18);
+}
+
+.theme-toggle {
+  margin-left: 1.25rem;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-2);
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transition: border-color 0.18s, color 0.18s;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle-icon::before { content: "\1F310"; font-size: 0.95rem; } /* system: globe */
+.theme-toggle[data-mode="light"] .theme-toggle-icon::before { content: "\2600\FE0F"; } /* sun */
+.theme-toggle[data-mode="dark"] .theme-toggle-icon::before { content: "\1F319"; } /* moon */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
