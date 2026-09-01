@@ -30,6 +30,10 @@
       <p>The library. Filters (<code>GaussianBlur</code>/<code>BoxBlur</code>/<code>Median</code>/<code>Sharpen</code>), edges (<code>Sobel</code>/<code>Prewitt</code>/<code>Scharr</code>/<code>Laplacian</code>/<code>Canny</code>), morphology (<code>Erode</code>/<code>Dilate</code>), geometry (<code>Resize</code>/<code>Rotate</code>/<code>Crop</code>/<code>Flip</code>), colour (<code>Grayscale</code>/<code>RGBToHSV</code>/<code>Otsu</code>), and PNG/JPEG load/save + in-memory decode/encode. SIMD kernels on amd64 (SSE2), arm64 (NEON) and s390x (vector).</p>
     </div>
     <div class="card">
+      <h4><a href="https://github.com/go-images/depth">depth</a></h4>
+      <p>One picture in, two eyes out. Depth guessed from cues in the picture itself (<code>Cues</code>), softened (<code>Soften</code>), and both eyes synthesised (<code>Views</code>) &mdash; for a headset or a 3D display. It takes <strong>any</strong> depth map, so a real network can be substituted; it is the whole answer where none is available, including <strong>in a browser</strong>. One pass over the source columns per row, no global sort: 6.3&nbsp;ms for a 4K frame on sixteen cores, 46.9&nbsp;ms on a telephone. Checked against a GPU implementation of the same rule, byte for byte.</p>
+    </div>
+    <div class="card">
       <h4><a href="https://go-images.github.io/docs/">docs</a></h4>
       <p>Versioned documentation site (MkDocs Material): API reference, the roadmap, and honest benchmark pages versus scikit-image. <a href="https://github.com/go-images/docs">Source →</a></p>
     </div>
