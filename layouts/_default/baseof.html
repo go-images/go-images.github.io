@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{/* Dark Reader repaints pages that already draw their own dark theme, as this one does: ask it to stand aside. */}}
+  <meta name="darkreader-lock">
   <title>{{ .Site.Title }} &mdash; pure-Go image processing</title>
   <meta name="description" content="{{ .Site.Params.description }}">
   <meta name="generator" content="Hugo">
