@@ -86,6 +86,13 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   blurb = "**A fork of Go's `image/jpeg`.** What differs: a **four-component** JPEG's chroma is upsampled the way libjpeg does — reading between the samples — rather than by repeating each one, which is what made CMYK scans come back softer here than everywhere else."
 
 [[params.repos]]
+  name = "jpeg2000"
+  pkg = "github.com/go-images/jpeg2000"
+  url = "https://github.com/go-images/jpeg2000"
+  status = "ready"
+  blurb = "**A pure-Go JPEG 2000 codec** (`.j2k`, `.jp2`, decode and encode), forked from ajroetker/go-jpeg2000 with every change stated in its NOTICE. ⛔ A file that says **CMYK** decodes to an `*image.CMYK`: read as red, green and blue it lost the black plate, 255 levels off poppler on every pixel, and it is now at most 2 over 2 440 044 samples. Tiled encodes now land where the decoder and OpenJPEG read them. The lossless colour transform is a plain loop, **22.8× faster on amd64** than the SIMD path it replaced, because that path took an allocating fallback. ⛔ Not yet under the organisation's 100% coverage gate: it is tested on eight architectures, but its coverage is not gated."
+
+[[params.repos]]
   name = "gif"
   pkg = "github.com/go-images/gif"
   url = "https://github.com/go-images/gif"
