@@ -90,7 +90,7 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   pkg = "github.com/go-images/jpeg2000"
   url = "https://github.com/go-images/jpeg2000"
   status = "ready"
-  blurb = "**A pure-Go JPEG 2000 codec** (`.j2k`, `.jp2`, decode and encode), forked from ajroetker/go-jpeg2000 with every change stated in its NOTICE. ⛔ A file that says **CMYK** decodes to an `*image.CMYK`: read as red, green and blue it lost the black plate, 255 levels off poppler on every pixel, and it is now at most 2 over 2 440 044 samples. Tiled encodes now land where the decoder and OpenJPEG read them. The lossless colour transform is a plain loop, **22.8× faster on amd64** than the SIMD path it replaced, because that path took an allocating fallback. ⛔ Not yet under the organisation's 100% coverage gate: it is tested on eight architectures, but its coverage is not gated."
+  blurb = "**A pure-Go JPEG 2000 codec** (`.j2k`, `.jp2`, decode and encode), forked from ajroetker/go-jpeg2000 with every change stated in its NOTICE. ⛔ A file that says **CMYK** decodes to an `*image.CMYK`: read as red, green and blue it lost the black plate, 255 levels off poppler on every pixel, and it is now at most 2 over 2 440 044 samples. Tiled encodes now land where the decoder and OpenJPEG read them. The lossless colour transform and the inverse 5/3 wavelet are plain loops, because the SIMD path took an allocating fallback on amd64. A lossless 1080p decode there went from **638 ms and 14.55 million allocations to 269 ms and 93 thousand**, and arm64 is not slower. ⛔ Not yet under the organisation's 100% coverage gate: it is tested on eight architectures, but its coverage is not gated."
 
 [[params.repos]]
   name = "gif"
