@@ -1,57 +1,124 @@
-{{ define "main" }}
-<section class="hero">
-  <img class="hero-logo" src="{{ "img/logo.svg" | relURL }}" alt="go-images logo" width="96" height="96">
-  <h1>
-    <span class="accent">{{ .Site.Params.heroAccent }}</span>
-  </h1>
-  {{ with .Site.Params.heroTagline }}<p class="tag">{{ . }}</p>{{ end }}
-  <div class="intro">
-    {{ range .Site.Params.heroIntro }}<p>{{ . | safeHTML }}</p>{{ end }}
-  </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Site.Title }} — image processing in pure Go, no OpenCV, no libvips</title>
+<meta name="description" content="go-images — the scikit-image vocabulary in pure Go with cgo disabled: filters, edges, morphology, geometry and colour, SIMD-accelerated, plus forks of Go's png, jpeg and gif that say what a truncated stream did decode, a Photoshop reader, and depth from a single picture.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{{/* ⛔ This meta is what the deploy VERIFIES. A sibling organisation's Pages
+     source was a branch, so for three hours it served Jekyll's rendering of
+     README.md while its workflow built the Hugo site and reported success.
+     The deploy now fetches the live URL and fails unless the generator is
+     Hugo, so removing this line breaks the deploy rather than the page. */}}
+{{ hugo.Generator }}
+{{ partial "styles.html" . }}
+</head>
+<body class="lm">
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img class="glyph" src="/img/logo.svg" width="32" height="32" alt="go-images logo"> go-images</a>
+    <nav><a href="#why">Why</a><a href="#repos">Repositories</a><a href="#quality">Quality</a><a href="#arches">Where it runs</a><a href="https://go-images.github.io/docs/">Docs</a></nav>
+    {{ partial "theme-toggle.html" . }}
+  </div></header>
+  {{ partial "fork-ribbon.html" "https://github.com/go-images/images" }}
 
-<section id="why">
-  <h2>Why go-images</h2>
-  <p>
-    Image processing in most languages means binding a C library &mdash; OpenCV, libvips,
-    ImageMagick. go-images brings the <code>scikit-image</code> vocabulary &mdash; filters,
-    edge detectors, morphology, geometry and colour transforms &mdash; to Go with
-    <strong>no cgo</strong>, cross-compiling to a static binary everywhere. The separable
-    hot operations are go-asmgen SIMD-accelerated, so it <strong>beats scikit-image</strong>
-    on box blur and Sobel. It is the cgo-free image processor the Go and Ruby ecosystems lacked.
-  </p>
-</section>
+  <div class="hero"><div class="wrap">
+    <div>
+      <h1 class="head">Image processing in pure Go.<br><span class="accent">No OpenCV. No libvips.</span></h1>
+      <p class="sub">The <code>scikit-image</code> vocabulary over an RGBA raster — blur, edges, morphology, geometry, colour — with <code>CGO_ENABLED=0</code>, so it cross-compiles to a static binary and runs in a browser tab. Image processing in most languages means binding a C library; this is one portable module, accelerated by <a href="https://github.com/go-asmgen">go-asmgen</a> SIMD. BSD-3-Clause.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://go-images.github.io/docs/">{{ partial "icons/book.html" . }}Read the documentation</a>
+        <a class="btn btn-ghost" href="https://github.com/go-images/images">{{ partial "icons/github.html" . }}Read the source</a>
+      </div>
+      {{/* ⛔ DERIVED, both of them. A count typed beside the data it counts is
+           right the day it is typed and has no way of staying right — and on
+           this landing the repositories were not even IN the data: they were
+           hand-made cards in this file, which is why the fleet's drift check
+           reported the organisation as advertising nothing. */}}
+      <div class="trust"><span><b>{{ len .Site.Params.repos }}</b> modules</span><span><b>{{ len .Site.Params.arches }}</b> architectures, tests <i>run</i></span><span><b>100%</b> coverage, gated</span></div>
+    </div>
+    <div class="term">
+      <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">main.go</span></div>
+<pre><span class="c-com">// The vocabulary, over any image.Image.</span>
+m := images.GaussianBlur(src, 2.0)
+e := images.Canny(m, 0.1, 0.3)
+b := images.Otsu(images.Grayscale(src))
 
-<section id="repos">
-  <h2>Repositories</h2>
-  <div class="grid">
-    <div class="card">
-      <h4><a href="https://github.com/go-images/images">images</a></h4>
-      <p>The library. Filters (<code>GaussianBlur</code>/<code>BoxBlur</code>/<code>Median</code>/<code>Sharpen</code>), edges (<code>Sobel</code>/<code>Prewitt</code>/<code>Scharr</code>/<code>Laplacian</code>/<code>Canny</code>), morphology (<code>Erode</code>/<code>Dilate</code>), geometry (<code>Resize</code>/<code>Rotate</code>/<code>Crop</code>/<code>Flip</code>), colour (<code>Grayscale</code>/<code>RGBToHSV</code>/<code>Otsu</code>), and PNG/JPEG load/save + in-memory decode/encode. SIMD kernels on amd64 (SSE2), arm64 (NEON) and s390x (vector).</p>
-    </div>
-    <div class="card">
-      <h4><a href="https://github.com/go-images/depth">depth</a></h4>
-      <p>One picture in, two eyes out. Depth guessed from cues in the picture itself (<code>Cues</code>), softened (<code>Soften</code>), and both eyes synthesised (<code>Views</code>) &mdash; for a headset or a 3D display. It takes <strong>any</strong> depth map, so a real network can be substituted; it is the whole answer where none is available, including <strong>in a browser</strong>. One pass over the source columns per row, no global sort: 6.3&nbsp;ms for a 4K frame on sixteen cores, 46.9&nbsp;ms on a telephone. Checked against a GPU implementation of the same rule, byte for byte.</p>
-    </div>
-    <div class="card">
-      <h4><a href="https://go-images.github.io/docs/">docs</a></h4>
-      <p>Versioned documentation site (MkDocs Material): API reference, the roadmap, and honest benchmark pages versus scikit-image. <a href="https://github.com/go-images/docs">Source →</a></p>
-    </div>
-    <div class="card">
-      <h4><a href="https://github.com/go-images/brand">brand</a></h4>
-      <p>Logos and icons for the organization, in SVG / PNG / JPG / ICO / ICNS across colour, white and black variants.</p>
-    </div>
-  </div>
-</section>
+<span class="c-com">// A stream that stopped early still says what it got.</span>
+img, rows, err := png.DecodePartial(r)
+<span class="c-out">the first `rows` are complete; the rest is not</span>
 
-<section id="quality">
-  <h2>Quality bar</h2>
-  <ul class="features">
-    <li><strong>Pure Go.</strong> <code>CGO_ENABLED=0</code> across the org. No OpenCV, no libvips, no native shims.</li>
-    <li><strong>100% test coverage.</strong> Gated in CI, validated against <code>scikit-image</code>.</li>
-    <li><strong>Faster than scikit-image</strong> on the separable hot operations (box blur, Sobel) via go-asmgen SIMD; honest where it is not.</li>
-    <li><strong>Multi-arch.</strong> Portable scalar core on all six 64-bit targets; SIMD kernels on amd64 / arm64 / s390x.</li>
-    <li><strong>BSD-3-Clause</strong> on every source file.</li>
-  </ul>
-</section>
-{{ end }}
+<span class="c-com">// And a Photoshop file is a picture like any other.</span>
+<span class="c-cmd">import</span> _ <span class="c-out">"github.com/go-images/psd"</span>
+m, _, err = image.Decode(f)</pre>
+    </div>
+  </div></div>
+
+  <div class="strip"><div class="wrap">
+    <span class="lead-line">One organisation, <b>{{ len .Site.Params.repos }}</b> modules, every one of them pure Go</span>
+    <div class="mods">{{ range .Site.Params.repos }}<a href="#repos">{{ .name }}</a>{{ end }}</div>
+    <span class="lead-line">and the suite <b>runs</b> on <b>{{ len .Site.Params.arches }}</b> architectures, big-endian included</span>
+    <div class="mods">{{ range .Site.Params.arches }}<a href="#arches">{{ . }}</a>{{ end }}</div>
+  </div></div>
+
+  <section id="why"><div class="wrap">
+    <span class="eyebrow">Why it exists</span>
+    <h2>Because the alternative is a C library.</h2>
+    <p class="lead">OpenCV and libvips are excellent, and they are C: a cgo build, a system package, a cross-compilation problem, and nothing at all in a browser. go-images is one module that builds for every target Go builds for — and where the work is separable and hot, it is faster than scikit-image rather than merely portable.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🧩</div><h3>A vocabulary, not a framework</h3><p>The names are <code>scikit-image</code>'s, so somebody porting a pipeline reads one list and recognises it: <code>gaussian_blur</code>, <code>sobel</code>, <code>canny</code>, <code>erode</code>, <code>dilate</code>, <code>resize</code>, <code>otsu</code>.</p></div>
+      <div class="card"><div class="ico">⚡</div><h3>SIMD where it pays</h3><p>Kernels generated by go-asmgen for amd64 (SSE2), arm64 (NEON) and s390x (vector). The portable scalar core is what the other targets run, and the benchmark pages say which is which rather than quoting the best number.</p></div>
+      <div class="card"><div class="ico">📉</div><h3>Honest where it loses</h3><p>It beats scikit-image on box blur and Sobel — the separable hot operations — and the documentation names the operations where it does not, because a benchmark page that only shows wins is an advertisement.</p></div>
+      <div class="card"><div class="ico">🌐</div><h3>And in a browser</h3><p><code>CGO_ENABLED=0</code> means <code>GOOS=js</code> works, which is the one thing no binding to a C library can offer: the pictures never leave the machine.</p></div>
+    </div>
+  </div></section>
+
+  <section id="repos"><div class="wrap">
+    <span class="eyebrow">The organisation</span>
+    <h2>One library, three codec forks, two readers.</h2>
+    <p class="lead">Each is its own module with its own release line. The three forks of Go's own codecs carry their changes in a NOTICE and pass Go's suite unaltered; a reader registers itself with <code>image.Decode</code>, so a caller imports it for its side effect and never names it again.</p>
+    <div class="grid">
+      {{ range .Site.Params.repos }}
+      <article class="card">
+        <h3><a href="{{ .url }}">{{ .name }}</a> <span class="tag {{ .status }}">{{ .status }}</span></h3>
+        <p>{{ .blurb | markdownify }}</p>
+        <p><a href="{{ .url }}">repository</a> · <a href="https://pkg.go.dev/{{ .pkg }}">pkg.go.dev</a></p>
+      </article>
+      {{ end }}
+    </div>
+  </div></section>
+
+  <section id="quality"><div class="wrap">
+    <span class="eyebrow">The bar</span>
+    <h2>100% of statements, and a judge that is not us.</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">💯</div><h3>Coverage is a gate, not a goal</h3><p>Every repository here fails its own CI below 100% of statements, error branches included. ⛔ And the gate reads the <b>profile</b> rather than the percentage: <code>total: 99.95%</code> prints as <code>100.0%</code>.</p></div>
+      <div class="card"><div class="ico">🔬</div><h3>Validated against scikit-image</h3><p>The library's filters are compared against the thing it borrows its vocabulary from, which is the only way a claim about a blur means anything: a filter checked against its own output is checked against its author.</p></div>
+      <div class="card"><div class="ico">⚖️</div><h3>And against ImageIO</h3><p>The Photoshop reader is judged by <code>sips</code> — macOS's own decoder, nothing to do with this code — pixel for pixel: exact on 2 073 600 pixels of a real file. ⛔ The first comparison blamed us for the instrument: <code>At().RGBA()</code> premultiplies, and the reference was already premultiplied, so it was done twice.</p></div>
+      <div class="card"><div class="ico">🧪</div><h3>Mutation-tested</h3><p>Deleting a guard and running the suite is the only way to know a test holds it. The PSD reader's sweep found a clamp nothing held — and the colour it protects is one <b>Lab holds and sRGB cannot</b>, which Go converts to a byte in an <i>implementation-dependent</i> way: 0 on one architecture, 251 on another.</p></div>
+    </div>
+  </div></section>
+
+  <section id="arches"><div class="wrap">
+    <span class="eyebrow">Where it runs</span>
+    <h2>{{ len .Site.Params.arches }} architectures, and the tests <i>run</i> on every one.</h2>
+    <p class="lead">Cross-compiling proves a program builds. It says nothing about what it does when a byte order, a word size or a vector unit differs — and that is exactly where an image kernel lives: {{ $n := len .Site.Params.arches }}{{ range $i, $a := .Site.Params.arches }}{{ if $i }}{{ if eq $i (sub $n 1) }} and {{ else }}, {{ end }}{{ end }}<code>{{ $a }}</code>{{ end }}.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🔄</div><h3>s390x is big-endian <i>and</i> has a vector unit</h3><p>So it is the one target where a byte-order assumption and a SIMD kernel can hide each other. Both are exercised: the scalar core and the vector kernel have to agree there as well as on amd64.</p></div>
+      <div class="card"><div class="ico">📏</div><h3>32-bit targets are built, and that matters here</h3><p>A picture's size is a number in a file: <code>300000 × 300000</code> overflows an <code>int</code> on a 32-bit build, and a bounds check that overflows waves the bomb through. The PSD reader multiplies as <code>int64</code> before comparing, for that reason.</p></div>
+      <div class="card"><div class="ico">🧮</div><h3>The scalar core is not a fallback</h3><p>It is the reference. Every SIMD kernel is checked against it rather than against a recorded output, so an architecture with no kernel is slower and never different.</p></div>
+      <div class="card"><div class="ico">📚</div><h3>Documentation of its own</h3><p><a href="https://go-images.github.io/docs/">The docs site</a> is built with MkDocs and versioned with mike: the API reference, the roadmap, and the benchmark pages against scikit-image.</p></div>
+    </div>
+  </div></section>
+
+  <section id="eco" style="padding-top:6px"><div class="wrap">
+    <div class="band">
+      <h2>Pictures in, pictures out, with no C anywhere.</h2>
+      <p>And where a picture becomes a document, <a href="https://go-pdfkit.github.io/">go-pdfkit</a> takes it from here — a PSD, a scan or a photograph onto a PDF page, in the same binary.</p>
+      <a class="btn btn-ghost" href="https://github.com/go-images">{{ partial "icons/github.html" . }}Read the source on GitHub →</a>
+    </div>
+  </div></section>
+
+  <footer><div class="wrap"><span>© the go-images authors · BSD-3-Clause</span><span>Pure Go · CGO_ENABLED=0 · <code>GOOS=js</code> included</span></div></footer>
+</body>
+</html>
