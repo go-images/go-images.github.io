@@ -98,3 +98,10 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   url = "https://github.com/go-images/gif"
   status = "ready"
   blurb = "**A fork of Go's `image/gif`**, with the same `DecodePartial` as `png`: the first frame at its full declared size, the number of pixel rows that are complete counting from the top, and the error that stopped the decode."
+
+[[params.repos]]
+  name = "webp"
+  pkg = "github.com/go-images/webp"
+  url = "https://github.com/go-images/webp"
+  status = "ready"
+  blurb = "**WebP encoding in pure Go**: the RIFF container, a **lossless** VP8L encoder (the pixels out bit for bit as they went in) and a **lossy** VP8 one with a quality from 0 to 100. On a rasterised page of text the lossless form is half the size of PNG; on a photograph the lossy form is 26× smaller than the lossless one."
