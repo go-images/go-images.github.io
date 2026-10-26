@@ -55,7 +55,7 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   pkg = "github.com/go-images/images"
   url = "https://github.com/go-images/images"
   status = "ready"
-  blurb = "**The library**: the `scikit-image` vocabulary in pure Go. Filters (`GaussianBlur`, `BoxBlur`, `Median`, `Sharpen`), edges (`Sobel`, `Prewitt`, `Scharr`, `Laplacian`, `Canny`), morphology (`Erode`, `Dilate`), geometry (`Resize`, `Rotate`, `Crop`, `Flip`) and colour (`Grayscale`, `RGBToHSV`, `Otsu`). SIMD kernels from [go-asmgen](https://github.com/go-asmgen) on amd64 (SSE2), arm64 (NEON) and s390x (vector), and it **beats scikit-image** on the separable hot operations — box blur and Sobel — with pages that say where it does not."
+  blurb = "**The library**: the `scikit-image` vocabulary in pure Go. Filters (`GaussianBlur`, `BoxBlur`, `Median`, `Sharpen`), edges (`Sobel`, `Prewitt`, `Scharr`, `Laplacian`, `Canny`), morphology (`Erode`, `Dilate`), geometry (`Resize`, `Rotate`, `Crop`, `Flip`) and colour (`Grayscale`, `RGBToHSV`, `Otsu`). SIMD kernels from [go-asmgen](https://github.com/go-asmgen) on amd64 (SSE2), arm64 (NEON) and s390x (vector), and it **beats scikit-image** on the separable hot operations — box blur and Sobel — with pages that say where it does not. **Pixels without codecs**: every pixel operation now lives in the codec-free subpackage `images/ops`, which the root package forwards under the same names and keeps the I/O (`Load`, `Save`, `Decode`, `Encode`). Importing `images` links every decoder (about 1.7 MB of wasm code); a program that only processes pixels should import `ops`. On main, in the next release."
 
 [[params.repos]]
   name = "depth"
