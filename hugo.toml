@@ -55,7 +55,7 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   pkg = "github.com/go-images/images"
   url = "https://github.com/go-images/images"
   status = "ready"
-  blurb = "**The library**: the `scikit-image` vocabulary in pure Go. Filters (`GaussianBlur`, `BoxBlur`, `Median`, `Sharpen`), edges (`Sobel`, `Prewitt`, `Scharr`, `Laplacian`, `Canny`), morphology (`Erode`, `Dilate`), geometry (`Resize`, `Rotate`, `Crop`, `Flip`) and colour (`Grayscale`, `RGBToHSV`, `Otsu`). SIMD kernels from [go-asmgen](https://github.com/go-asmgen) on amd64 (SSE2), arm64 (NEON) and s390x (vector), and it **beats scikit-image** on the separable hot operations — box blur and Sobel — with pages that say where it does not. **Pixels without codecs**: every pixel operation now lives in the codec-free subpackage `images/ops`, which the root package forwards under the same names and keeps the I/O (`Load`, `Save`, `Decode`, `Encode`). Importing `images` links every decoder (about 1.7 MB of wasm code); a program that only processes pixels should import `ops`. On main, in the next release. **Bounded decodes** (v0.3.0): every decode reads the header first and refuses an image above `DecodeOptions{MaxPixels}` (default 40 Mpx, `DecodeWith`), so a 1×1 PNG claiming 16000×16000 allocates 4.5 KB instead of 1 GB."
+  blurb = "**The library**: the `scikit-image` vocabulary in pure Go. Filters (`GaussianBlur`, `BoxBlur`, `Median`, `Sharpen`), edges (`Sobel`, `Prewitt`, `Scharr`, `Laplacian`, `Canny`), morphology (`Erode`, `Dilate`), geometry (`Resize`, `Rotate`, `Crop`, `Flip`) and colour (`Grayscale`, `RGBToHSV`, `Otsu`). SIMD kernels from [go-asmgen](https://github.com/go-asmgen), and it **beats scikit-image** on the separable hot operations — box blur and Sobel — with pages that say where it does not. **Pixels without codecs**: every pixel operation now lives in the codec-free subpackage `images/ops`, which the root package forwards under the same names and keeps the I/O (`Load`, `Save`, `Decode`, `Encode`). Importing `images` links every decoder (about 1.7 MB of wasm code); a program that only processes pixels should import `ops`. On main, in the next release. **Bounded decodes** (v0.3.0): every decode reads the header first and refuses an image above `DecodeOptions{MaxPixels}` (default 40 Mpx, `DecodeWith`), so a 1×1 PNG claiming 16000×16000 allocates 4.5 KB instead of 1 GB."
 
 [[params.repos]]
   name = "depth"
@@ -105,3 +105,17 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   url = "https://github.com/go-images/webp"
   status = "ready"
   blurb = "**WebP encoding in pure Go**: the RIFF container, a **lossless** VP8L encoder (the pixels out bit for bit as they went in) and a **lossy** VP8 one with a quality from 0 to 100. On a rasterised page of text the lossless form is half the size of PNG; on a photograph the lossy form is 26× smaller than the lossless one."
+
+# The hero's buttons, rendered by landingkit's cta.html in the kit's order.
+[[params.cta]]
+  kind  = "docs"
+  href  = "https://go-images.github.io/docs/"
+  label = "Read the documentation"
+[[params.cta]]
+  kind  = "github"
+  href  = "https://github.com/go-images/images"
+  label = "Read the source"
+
+# The architectures the tests RUN on, read from the library's CI.
+[params.mantra]
+  goarch = ["amd64", "arm64", "riscv64", "loong64", "ppc64le", "s390x"]
