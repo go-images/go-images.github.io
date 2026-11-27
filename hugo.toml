@@ -106,6 +106,13 @@ disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
   status = "ready"
   blurb = "**WebP encoding in pure Go**: the RIFF container, a **lossless** VP8L encoder (the pixels out bit for bit as they went in) and a **lossy** VP8 one with a quality from 0 to 100. On a rasterised page of text the lossless form is half the size of PNG; on a photograph the lossy form is 26× smaller than the lossless one."
 
+[[params.repos]]
+  name = "heif"
+  pkg = "github.com/go-images/heif"
+  url = "https://github.com/go-images/heif"
+  status = "ready"
+  blurb = "**HEIC and HEIF stills (`.heic`, `.heif`) for `image.Decode`**, in pure Go: the HEVC picture is read, then its rotation, mirroring and cropping applied and a grid of tiles assembled. Alpha, HDR gain maps and image sequences are not read. A decode is bounded before it is spent: `MaxMemory` refuses above **320 MiB** by default (v0.1.0)."
+
 # The hero's buttons, rendered by landingkit's cta.html in the kit's order.
 [[params.cta]]
   kind  = "docs"
